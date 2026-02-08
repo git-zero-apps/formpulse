@@ -49,7 +49,7 @@ export default function LoginPage() {
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-brand-600 to-brand-800 items-center justify-center p-12">
         <div className="max-w-md">
           <h1 className="text-4xl font-bold text-white mb-4">Formpulse</h1>
-          <p className="text-brand-100 text-lg leading-relaxed">Simple survey builder for individuals and small teams</p>
+          <p className="text-brand-100 text-lg leading-relaxed">Simple, no-frills survey builder for individuals and small teams</p>
         </div>
       </div>
 

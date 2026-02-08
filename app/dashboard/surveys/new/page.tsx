@@ -21,12 +21,10 @@ export default function NewSurveyPage() {
 
     const record: Record<string, unknown> = {
       user_id: user?.id,
-      team_id: formData.get("team_id"),
       title: formData.get("title"),
       description: formData.get("description"),
       status: formData.get("status"),
       share_url: formData.get("share_url"),
-      embed_code: formData.get("embed_code"),
       close_date: formData.get("close_date"),
       response_count: formData.get("response_count") ? Number(formData.get("response_count")) : null,
     };
@@ -62,10 +60,6 @@ export default function NewSurveyPage() {
 
       <form onSubmit={handleSubmit} className="card space-y-6">
         <div>
-          <label htmlFor="team_id" className="label">Team Id</label>
-          <input id="team_id" name="team_id" type="text" className="input" placeholder="Enter team id" />
-        </div>
-        <div>
           <label htmlFor="title" className="label">Title</label>
           <input id="title" name="title" type="text" className="input" placeholder="Enter title" required />
         </div>
@@ -80,10 +74,6 @@ export default function NewSurveyPage() {
         <div>
           <label htmlFor="share_url" className="label">Share Url</label>
           <input id="share_url" name="share_url" type="url" className="input" placeholder="Enter share url" required />
-        </div>
-        <div>
-          <label htmlFor="embed_code" className="label">Embed Code</label>
-          <input id="embed_code" name="embed_code" type="text" className="input" placeholder="Enter embed code" />
         </div>
         <div>
           <label htmlFor="close_date" className="label">Close Date</label>

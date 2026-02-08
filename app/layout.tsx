@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Formpulse",
-  description: "Simple survey builder for individuals and small teams",
+  description: "Simple, no-frills survey builder for individuals and small teams",
 };
 
 export default function RootLayout({

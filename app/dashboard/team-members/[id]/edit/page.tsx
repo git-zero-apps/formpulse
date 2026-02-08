@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function EditResponsPage() {
+export default function EditTeamMemberPage() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export default function EditResponsPage() {
     async function fetchRecord() {
       const supabase = createClient();
       const { data, error } = await supabase
-        .from("responses")
+        .from("team_members")
         .select("*")
         .eq("id", params.id)
         .single();
@@ -38,14 +38,13 @@ export default function EditResponsPage() {
     const supabase = createClient();
 
     const updates: Record<string, unknown> = {
-      survey_id: formData.get("survey_id"),
-      respondent_identifier: formData.get("respondent_identifier"),
-      completion_status: formData.get("completion_status"),
-      submitted_at: formData.get("submitted_at"),
+      owner_id: formData.get("owner_id"),
+      member_id: formData.get("member_id"),
+      status: formData.get("status"),
     };
 
     const { error: updateError } = await supabase
-      .from("responses")
+      .from("team_members")
       .update(updates)
       .eq("id", params.id);
 
@@ -53,7 +52,7 @@ export default function EditResponsPage() {
       setError(updateError.message);
       setLoading(false);
     } else {
-      router.push("/dashboard/responses");
+      router.push("/dashboard/team-members");
       router.refresh();
     }
   };
@@ -69,7 +68,7 @@ export default function EditResponsPage() {
   if (!record) {
     return (
       <div className="rounded-lg bg-red-50 border border-red-200 p-4">
-        <p className="text-sm text-red-700">Respons not found.</p>
+        <p className="text-sm text-red-700">Team Member not found.</p>
       </div>
     );
   }
@@ -77,13 +76,13 @@ export default function EditResponsPage() {
   return (
     <div className="max-w-2xl">
       <div className="mb-8">
-        <Link href="/dashboard/responses" className="text-sm text-gray-500 hover:text-gray-700 mb-2 inline-flex items-center gap-1">
+        <Link href="/dashboard/team-members" className="text-sm text-gray-500 hover:text-gray-700 mb-2 inline-flex items-center gap-1">
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
-          Back to Responses
+          Back to Team Members
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Edit Respons</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mt-2">Edit Team Member</h1>
       </div>
 
       {error && (
@@ -94,27 +93,23 @@ export default function EditResponsPage() {
 
       <form onSubmit={handleSubmit} className="card space-y-6">
         <div>
-          <label htmlFor="survey_id" className="label">Survey Id</label>
-          <input id="survey_id" name="survey_id" type="text" className="input" defaultValue={String(record.survey_id ?? "")} required />
+          <label htmlFor="owner_id" className="label">Owner Id</label>
+          <input id="owner_id" name="owner_id" type="text" className="input" defaultValue={String(record.owner_id ?? "")} required />
         </div>
         <div>
-          <label htmlFor="respondent_identifier" className="label">Respondent Identifier</label>
-          <input id="respondent_identifier" name="respondent_identifier" type="text" className="input" defaultValue={String(record.respondent_identifier ?? "")} />
+          <label htmlFor="member_id" className="label">Member Id</label>
+          <input id="member_id" name="member_id" type="text" className="input" defaultValue={String(record.member_id ?? "")} required />
         </div>
         <div>
-          <label htmlFor="completion_status" className="label">Completion Status</label>
-          <input id="completion_status" name="completion_status" type="text" className="input" defaultValue={String(record.completion_status ?? "")} />
-        </div>
-        <div>
-          <label htmlFor="submitted_at" className="label">Submitted At</label>
-          <input id="submitted_at" name="submitted_at" type="datetime-local" className="input" defaultValue={String(record.submitted_at ?? "")} />
+          <label htmlFor="status" className="label">Status</label>
+          <input id="status" name="status" type="text" className="input" defaultValue={String(record.status ?? "")} />
         </div>
 
         <div className="flex items-center gap-3 pt-4 border-t">
           <button type="submit" disabled={loading} className="btn-primary">
-            {loading ? "Saving..." : "Update Respons"}
+            {loading ? "Saving..." : "Update Team Member"}
           </button>
-          <Link href="/dashboard/responses" className="btn-secondary">Cancel</Link>
+          <Link href="/dashboard/team-members" className="btn-secondary">Cancel</Link>
         </div>
       </form>
     </div>

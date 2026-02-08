@@ -6,7 +6,8 @@ export interface Profiles {
   email: string;
   role: string;
   subscription_plan: string;
-  team_id: string | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -16,33 +17,17 @@ export interface ProfilesInsert {
   email: string;
   role?: string;
   subscription_plan?: string;
-  team_id: string | null;
-}
-
-export interface Teams {
-  id?: string;
-  name: string;
-  owner_id: string;
-  subscription_plan: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface TeamsInsert {
-  name: string;
-  owner_id: string;
-  subscription_plan?: string;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
 }
 
 export interface Surveys {
   id?: string;
   user_id: string;
-  team_id: string | null;
   title: string;
   description: string | null;
   status: string;
   share_url: string;
-  embed_code: string | null;
   close_date: string | null;
   response_count: number;
   created_at: string;
@@ -51,12 +36,10 @@ export interface Surveys {
 
 export interface SurveysInsert {
   user_id: string;
-  team_id: string | null;
   title: string;
   description: string | null;
   status?: string;
   share_url: string;
-  embed_code: string | null;
   close_date: string | null;
   response_count?: number;
 }
@@ -85,25 +68,25 @@ export interface QuestionsInsert {
 export interface Responses {
   id?: string;
   survey_id: string;
-  respondent_email: string | null;
-  submitted_at: string;
+  respondent_identifier: string | null;
   completion_status: string;
+  submitted_at: string;
   created_at: string;
   updated_at: string;
 }
 
 export interface ResponsesInsert {
   survey_id: string;
-  respondent_email: string | null;
-  submitted_at?: string;
+  respondent_identifier: string | null;
   completion_status?: string;
+  submitted_at?: string;
 }
 
 export interface Answers {
   id?: string;
   response_id: string;
   question_id: string;
-  answer_value: Record<string, unknown>;
+  answer_value: string;
   created_at: string;
   updated_at: string;
 }
@@ -111,5 +94,20 @@ export interface Answers {
 export interface AnswersInsert {
   response_id: string;
   question_id: string;
-  answer_value: Record<string, unknown>;
+  answer_value: string;
+}
+
+export interface TeamMembers {
+  id?: string;
+  owner_id: string;
+  member_id: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TeamMembersInsert {
+  owner_id: string;
+  member_id: string;
+  status?: string;
 }

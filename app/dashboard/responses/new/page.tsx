@@ -21,9 +21,9 @@ export default function NewResponsPage() {
 
     const record: Record<string, unknown> = {
       survey_id: formData.get("survey_id"),
-      respondent_email: formData.get("respondent_email"),
-      submitted_at: formData.get("submitted_at"),
+      respondent_identifier: formData.get("respondent_identifier"),
       completion_status: formData.get("completion_status"),
+      submitted_at: formData.get("submitted_at"),
     };
 
     const { error: insertError } = await supabase.from("responses").insert(record);
@@ -61,16 +61,16 @@ export default function NewResponsPage() {
           <input id="survey_id" name="survey_id" type="text" className="input" placeholder="Enter survey id" required />
         </div>
         <div>
-          <label htmlFor="respondent_email" className="label">Respondent Email</label>
-          <input id="respondent_email" name="respondent_email" type="email" className="input" placeholder="Enter respondent email" />
-        </div>
-        <div>
-          <label htmlFor="submitted_at" className="label">Submitted At</label>
-          <input id="submitted_at" name="submitted_at" type="datetime-local" className="input" placeholder="Enter submitted at" />
+          <label htmlFor="respondent_identifier" className="label">Respondent Identifier</label>
+          <input id="respondent_identifier" name="respondent_identifier" type="text" className="input" placeholder="Enter respondent identifier" />
         </div>
         <div>
           <label htmlFor="completion_status" className="label">Completion Status</label>
           <input id="completion_status" name="completion_status" type="text" className="input" placeholder="Enter completion status" />
+        </div>
+        <div>
+          <label htmlFor="submitted_at" className="label">Submitted At</label>
+          <input id="submitted_at" name="submitted_at" type="datetime-local" className="input" placeholder="Enter submitted at" />
         </div>
 
         <div className="flex items-center gap-3 pt-4 border-t">

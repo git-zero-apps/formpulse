@@ -1,6 +1,6 @@
 # Formpulse
 
-Simple survey builder for individuals and small teams
+Simple, no-frills survey builder for individuals and small teams
 
 Built with [ZERO](https://usezero.co) — describe your business, get a running app.
 

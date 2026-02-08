@@ -6,8 +6,7 @@ export interface Profiles {
   email: string;
   role: string;
   subscription_plan: string;
-  stripe_customer_id: string | null;
-  stripe_subscription_id: string | null;
+  workspace_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -17,31 +16,53 @@ export interface ProfilesInsert {
   email: string;
   role?: string;
   subscription_plan?: string;
+  workspace_id: string | null;
+}
+
+export interface Workspaces {
+  id?: string;
+  name: string;
+  owner_id: string;
+  subscription_plan: string;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WorkspacesInsert {
+  name: string;
+  owner_id: string;
+  subscription_plan?: string;
   stripe_customer_id: string | null;
   stripe_subscription_id: string | null;
 }
 
 export interface Surveys {
   id?: string;
-  user_id: string;
+  workspace_id: string;
+  created_by: string;
   title: string;
   description: string | null;
   status: string;
   share_url: string;
   close_date: string | null;
   response_count: number;
+  settings?: Record<string, unknown> | null;
   created_at: string;
   updated_at: string;
 }
 
 export interface SurveysInsert {
-  user_id: string;
+  workspace_id: string;
+  created_by: string;
   title: string;
   description: string | null;
   status?: string;
   share_url: string;
   close_date: string | null;
   response_count?: number;
+  settings?: Record<string, unknown> | null;
 }
 
 export interface Questions {
@@ -49,9 +70,10 @@ export interface Questions {
   survey_id: string;
   question_text: string;
   question_type: string;
-  options: Record<string, unknown> | null;
+  options?: Record<string, unknown> | null;
   required: boolean;
   order_index: number;
+  settings?: Record<string, unknown> | null;
   created_at: string;
   updated_at: string;
 }
@@ -60,33 +82,36 @@ export interface QuestionsInsert {
   survey_id: string;
   question_text: string;
   question_type: string;
-  options: Record<string, unknown> | null;
+  options?: Record<string, unknown> | null;
   required?: boolean;
-  order_index: number;
+  order_index?: number;
+  settings?: Record<string, unknown> | null;
 }
 
 export interface Responses {
   id?: string;
   survey_id: string;
-  respondent_identifier: string | null;
-  completion_status: string;
-  submitted_at: string;
+  respondent_email: string | null;
+  respondent_metadata?: Record<string, unknown> | null;
+  completed: boolean;
+  submitted_at: string | null;
   created_at: string;
   updated_at: string;
 }
 
 export interface ResponsesInsert {
   survey_id: string;
-  respondent_identifier: string | null;
-  completion_status?: string;
-  submitted_at?: string;
+  respondent_email: string | null;
+  respondent_metadata?: Record<string, unknown> | null;
+  completed?: boolean;
+  submitted_at: string | null;
 }
 
 export interface Answers {
   id?: string;
   response_id: string;
   question_id: string;
-  answer_value: string;
+  answer_value: Record<string, unknown>;
   created_at: string;
   updated_at: string;
 }
@@ -94,20 +119,5 @@ export interface Answers {
 export interface AnswersInsert {
   response_id: string;
   question_id: string;
-  answer_value: string;
-}
-
-export interface TeamMembers {
-  id?: string;
-  owner_id: string;
-  member_id: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface TeamMembersInsert {
-  owner_id: string;
-  member_id: string;
-  status?: string;
+  answer_value: Record<string, unknown>;
 }

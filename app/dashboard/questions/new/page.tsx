@@ -26,6 +26,7 @@ export default function NewQuestionPage() {
       options: formData.get("options"),
       required: formData.get("required") === "on",
       order_index: formData.get("order_index") ? Number(formData.get("order_index")) : null,
+      settings: formData.get("settings"),
     };
 
     const { error: insertError } = await supabase.from("questions").insert(record);
@@ -80,7 +81,11 @@ export default function NewQuestionPage() {
         </div>
         <div>
           <label htmlFor="order_index" className="label">Order Index</label>
-          <input id="order_index" name="order_index" type="number" className="input" placeholder="Enter order index" required />
+          <input id="order_index" name="order_index" type="number" className="input" placeholder="Enter order index" />
+        </div>
+        <div>
+          <label htmlFor="settings" className="label">Settings</label>
+          <input id="settings" name="settings" type="text" className="input" placeholder="Enter settings" />
         </div>
 
         <div className="flex items-center gap-3 pt-4 border-t">

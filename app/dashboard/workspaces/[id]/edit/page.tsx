@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function EditResponsPage() {
+export default function EditWorkspacePage() {
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +17,7 @@ export default function EditResponsPage() {
     async function fetchRecord() {
       const supabase = createClient();
       const { data, error } = await supabase
-        .from("responses")
+        .from("workspaces")
         .select("*")
         .eq("id", params.id)
         .single();
@@ -38,15 +38,15 @@ export default function EditResponsPage() {
     const supabase = createClient();
 
     const updates: Record<string, unknown> = {
-      survey_id: formData.get("survey_id"),
-      respondent_email: formData.get("respondent_email"),
-      respondent_metadata: formData.get("respondent_metadata"),
-      completed: formData.get("completed") === "on",
-      submitted_at: formData.get("submitted_at"),
+      name: formData.get("name"),
+      owner_id: formData.get("owner_id"),
+      subscription_plan: formData.get("subscription_plan"),
+      stripe_customer_id: formData.get("stripe_customer_id"),
+      stripe_subscription_id: formData.get("stripe_subscription_id"),
     };
 
     const { error: updateError } = await supabase
-      .from("responses")
+      .from("workspaces")
       .update(updates)
       .eq("id", params.id);
 
@@ -54,7 +54,7 @@ export default function EditResponsPage() {
       setError(updateError.message);
       setLoading(false);
     } else {
-      router.push("/dashboard/responses");
+      router.push("/dashboard/workspaces");
       router.refresh();
     }
   };
@@ -70,7 +70,7 @@ export default function EditResponsPage() {
   if (!record) {
     return (
       <div className="rounded-lg bg-red-50 border border-red-200 p-4">
-        <p className="text-sm text-red-700">Respons not found.</p>
+        <p className="text-sm text-red-700">Workspace not found.</p>
       </div>
     );
   }
@@ -78,13 +78,13 @@ export default function EditResponsPage() {
   return (
     <div className="max-w-2xl">
       <div className="mb-8">
-        <Link href="/dashboard/responses" className="text-sm text-gray-500 hover:text-gray-700 mb-2 inline-flex items-center gap-1">
+        <Link href="/dashboard/workspaces" className="text-sm text-gray-500 hover:text-gray-700 mb-2 inline-flex items-center gap-1">
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
-          Back to Responses
+          Back to Workspaces
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Edit Respons</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mt-2">Edit Workspace</h1>
       </div>
 
       {error && (
@@ -95,31 +95,31 @@ export default function EditResponsPage() {
 
       <form onSubmit={handleSubmit} className="card space-y-6">
         <div>
-          <label htmlFor="survey_id" className="label">Survey Id</label>
-          <input id="survey_id" name="survey_id" type="text" className="input" defaultValue={String(record.survey_id ?? "")} required />
+          <label htmlFor="name" className="label">Name</label>
+          <input id="name" name="name" type="text" className="input" defaultValue={String(record.name ?? "")} required />
         </div>
         <div>
-          <label htmlFor="respondent_email" className="label">Respondent Email</label>
-          <input id="respondent_email" name="respondent_email" type="email" className="input" defaultValue={String(record.respondent_email ?? "")} />
+          <label htmlFor="owner_id" className="label">Owner Id</label>
+          <input id="owner_id" name="owner_id" type="text" className="input" defaultValue={String(record.owner_id ?? "")} required />
         </div>
         <div>
-          <label htmlFor="respondent_metadata" className="label">Respondent Metadata</label>
-          <input id="respondent_metadata" name="respondent_metadata" type="text" className="input" defaultValue={String(record.respondent_metadata ?? "")} />
-        </div>
-        <div className="flex items-center gap-3">
-          <input id="completed" name="completed" type="checkbox" defaultChecked={!!record.completed} className="h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500" />
-          <label htmlFor="completed" className="text-sm font-medium text-gray-700">Completed</label>
+          <label htmlFor="subscription_plan" className="label">Subscription Plan</label>
+          <input id="subscription_plan" name="subscription_plan" type="text" className="input" defaultValue={String(record.subscription_plan ?? "")} />
         </div>
         <div>
-          <label htmlFor="submitted_at" className="label">Submitted At</label>
-          <input id="submitted_at" name="submitted_at" type="datetime-local" className="input" defaultValue={String(record.submitted_at ?? "")} />
+          <label htmlFor="stripe_customer_id" className="label">Stripe Customer Id</label>
+          <input id="stripe_customer_id" name="stripe_customer_id" type="text" className="input" defaultValue={String(record.stripe_customer_id ?? "")} />
+        </div>
+        <div>
+          <label htmlFor="stripe_subscription_id" className="label">Stripe Subscription Id</label>
+          <input id="stripe_subscription_id" name="stripe_subscription_id" type="text" className="input" defaultValue={String(record.stripe_subscription_id ?? "")} />
         </div>
 
         <div className="flex items-center gap-3 pt-4 border-t">
           <button type="submit" disabled={loading} className="btn-primary">
-            {loading ? "Saving..." : "Update Respons"}
+            {loading ? "Saving..." : "Update Workspace"}
           </button>
-          <Link href="/dashboard/responses" className="btn-secondary">Cancel</Link>
+          <Link href="/dashboard/workspaces" className="btn-secondary">Cancel</Link>
         </div>
       </form>
     </div>

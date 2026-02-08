@@ -43,6 +43,7 @@ export default async function QuestionsPage() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Options</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Index</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Settings</th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -55,6 +56,7 @@ export default async function QuestionsPage() {
                   <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{String(item.options ?? "—")}</td>
                   <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{String(item.required ?? "—")}</td>
                   <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{String(item.order_index ?? "—")}</td>
+                  <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{String(item.settings ?? "—")}</td>
                   <td className="px-6 py-4 text-right text-sm whitespace-nowrap">
                     <Link href={`/dashboard/questions/${item.id}/edit`} className="text-brand-600 hover:text-brand-800 font-medium mr-4">
                       Edit

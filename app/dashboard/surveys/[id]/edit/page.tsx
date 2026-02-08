@@ -38,12 +38,15 @@ export default function EditSurveyPage() {
     const supabase = createClient();
 
     const updates: Record<string, unknown> = {
+      workspace_id: formData.get("workspace_id"),
+      created_by: formData.get("created_by"),
       title: formData.get("title"),
       description: formData.get("description"),
       status: formData.get("status"),
       share_url: formData.get("share_url"),
       close_date: formData.get("close_date"),
       response_count: formData.get("response_count") ? Number(formData.get("response_count")) : null,
+      settings: formData.get("settings"),
     };
 
     const { error: updateError } = await supabase
@@ -96,6 +99,14 @@ export default function EditSurveyPage() {
 
       <form onSubmit={handleSubmit} className="card space-y-6">
         <div>
+          <label htmlFor="workspace_id" className="label">Workspace Id</label>
+          <input id="workspace_id" name="workspace_id" type="text" className="input" defaultValue={String(record.workspace_id ?? "")} required />
+        </div>
+        <div>
+          <label htmlFor="created_by" className="label">Created By</label>
+          <input id="created_by" name="created_by" type="text" className="input" defaultValue={String(record.created_by ?? "")} required />
+        </div>
+        <div>
           <label htmlFor="title" className="label">Title</label>
           <input id="title" name="title" type="text" className="input" defaultValue={String(record.title ?? "")} required />
         </div>
@@ -118,6 +129,10 @@ export default function EditSurveyPage() {
         <div>
           <label htmlFor="response_count" className="label">Response Count</label>
           <input id="response_count" name="response_count" type="number" className="input" defaultValue={String(record.response_count ?? "")} />
+        </div>
+        <div>
+          <label htmlFor="settings" className="label">Settings</label>
+          <input id="settings" name="settings" type="text" className="input" defaultValue={String(record.settings ?? "")} />
         </div>
 
         <div className="flex items-center gap-3 pt-4 border-t">

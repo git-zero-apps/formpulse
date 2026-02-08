@@ -10,7 +10,7 @@ export async function GET() {
   }
 
   const { data, error } = await supabase
-    .from("surveys")
+    .from("workspaces")
     .select("*")
     .order("created_at", { ascending: false });
 
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
   const body = await request.json();
 
   const { data, error } = await supabase
-    .from("surveys")
+    .from("workspaces")
     .insert({ ...body })
     .select()
     .single();

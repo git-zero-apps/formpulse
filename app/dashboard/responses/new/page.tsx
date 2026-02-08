@@ -21,8 +21,9 @@ export default function NewResponsPage() {
 
     const record: Record<string, unknown> = {
       survey_id: formData.get("survey_id"),
-      respondent_identifier: formData.get("respondent_identifier"),
-      completion_status: formData.get("completion_status"),
+      respondent_email: formData.get("respondent_email"),
+      respondent_metadata: formData.get("respondent_metadata"),
+      completed: formData.get("completed") === "on",
       submitted_at: formData.get("submitted_at"),
     };
 
@@ -61,12 +62,16 @@ export default function NewResponsPage() {
           <input id="survey_id" name="survey_id" type="text" className="input" placeholder="Enter survey id" required />
         </div>
         <div>
-          <label htmlFor="respondent_identifier" className="label">Respondent Identifier</label>
-          <input id="respondent_identifier" name="respondent_identifier" type="text" className="input" placeholder="Enter respondent identifier" />
+          <label htmlFor="respondent_email" className="label">Respondent Email</label>
+          <input id="respondent_email" name="respondent_email" type="email" className="input" placeholder="Enter respondent email" />
         </div>
         <div>
-          <label htmlFor="completion_status" className="label">Completion Status</label>
-          <input id="completion_status" name="completion_status" type="text" className="input" placeholder="Enter completion status" />
+          <label htmlFor="respondent_metadata" className="label">Respondent Metadata</label>
+          <input id="respondent_metadata" name="respondent_metadata" type="text" className="input" placeholder="Enter respondent metadata" />
+        </div>
+        <div className="flex items-center gap-3">
+          <input id="completed" name="completed" type="checkbox" className="h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500" />
+          <label htmlFor="completed" className="text-sm font-medium text-gray-700">Completed</label>
         </div>
         <div>
           <label htmlFor="submitted_at" className="label">Submitted At</label>
